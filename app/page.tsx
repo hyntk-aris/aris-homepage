@@ -20,9 +20,9 @@ export default function HomePage() {
       <FeaturedServicesSection />
       <AboutSection />
       <FeaturedSolutionsSection />
+      <ProcessSection />
       <WhyChooseUsSection />
       <FeaturedProjectsSection />
-      <ProcessSection />
       <TestimonialsSection />
       <TeamSection />
       <StatsSection />

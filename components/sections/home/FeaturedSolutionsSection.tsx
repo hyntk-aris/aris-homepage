@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
 
@@ -110,14 +110,16 @@ const SOLUTIONS_DATA: Solution[] = [
   },
 ]
 
+const CONTAINER_WIDTH = 1440
+
 const SolutionCard = ({ solution }: { solution: Solution }) => {
   return (
     <motion.div
-      className="flex-shrink-0 w-[400px] h-[500px] bg-white rounded-2xl border border-neutral-200 overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
+      className="flex-shrink-0 min-w-[354px] w-[354px] bg-white rounded-2xl border border-neutral-200 overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col"
       whileHover={{ y: -8 }}
     >
-      {/* Cover Image */}
-      <div className="relative h-1/2 w-full overflow-hidden bg-neutral-100">
+      {/* Cover Image - Fixed height 266px */}
+      <div className="relative h-[266px] w-full overflow-hidden bg-neutral-100">
         <Image
           src={solution.coverImage}
           alt={solution.title}
@@ -127,7 +129,7 @@ const SolutionCard = ({ solution }: { solution: Solution }) => {
       </div>
 
       {/* Body */}
-      <div className="h-1/2 flex flex-col p-5 justify-between">
+      <div className="flex flex-col p-5 justify-between flex-1">
         {/* Title and Features */}
         <div className="space-y-3">
           <h3 className="text-lg font-bold text-neutral-900 line-clamp-2">
@@ -160,48 +162,95 @@ const SolutionCard = ({ solution }: { solution: Solution }) => {
 
 export default function FeaturedSolutionsSection() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [leftInset, setLeftInset] = useState(0)
+  const [xScrollAmount, setXScrollAmount] = useState(0)
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   })
 
-  // Transform scroll progress (0 -> 1) to horizontal translation
-  const xTranslate = useTransform(scrollYProgress, [0, 1], ["0%", "-85%"])
+  // Calculate left inset and scroll amount based on container alignment
+  useEffect(() => {
+    const calculateAlignment = () => {
+      if (typeof window === "undefined") return
+
+      // Calculate left inset for 1440px container centered on viewport
+      const calculatedLeftInset = Math.max(0, (window.innerWidth - CONTAINER_WIDTH) / 2)
+      setLeftInset(calculatedLeftInset)
+
+      // Calculate scroll amount after a brief delay to ensure DOM is ready
+      setTimeout(() => {
+        if (trackRef.current) {
+          // Track width includes all cards + gaps
+          const trackWidth = trackRef.current.scrollWidth
+          // Total horizontal scroll needed: track width - viewport width + (leftInset on both sides)
+          const calculatedXScrollAmount = Math.max(
+            0,
+            trackWidth - window.innerWidth + calculatedLeftInset * 2
+          )
+          setXScrollAmount(calculatedXScrollAmount)
+        }
+      }, 50)
+    }
+
+    calculateAlignment()
+
+    // Recalculate on window resize
+    window.addEventListener("resize", calculateAlignment)
+    return () => window.removeEventListener("resize", calculateAlignment)
+  }, [])
+
+  // Transform scroll progress with "pause" effect
+  // 0-85% progress: cards scroll horizontally
+  // 85-100% progress: cards pause (pause effect)
+  const xTranslate = useTransform(
+    scrollYProgress,
+    [0, 0.85, 1],
+    [0, -xScrollAmount, -xScrollAmount]
+  )
 
   return (
-    <section ref={containerRef} className="relative h-[300vh] bg-neutral-50">
+    <section ref={containerRef} className="relative h-[300vh] bg-neutral-50 pb-16">
       {/* Sticky Container */}
-      <div className="sticky top-0 h-screen bg-neutral-50 flex items-center overflow-hidden">
-        {/* Header - Positioned above scroll area */}
-        <div className="absolute top-8 left-4 right-4 z-10 md:top-12 md:left-8 md:right-8 max-w-7xl mx-auto">
-          <div className="flex flex-col gap-2 md:gap-4">
-            <div className="flex items-center gap-2">
-              <div className="h-1 w-6 bg-blue-500" />
-              <span className="text-sm font-semibold text-blue-500">Giải pháp</span>
+      <div className="sticky top-0 h-screen bg-neutral-50 flex flex-col items-center overflow-hidden">
+        {/* Header - Left aligned heading with action button */}
+        <div className="relative w-full z-10 pt-[164px]">
+          <div className="max-w-7xl w-full mx-auto flex items-start justify-between gap-4 md:gap-6 mb-12 px-4 md:px-8">
+            <div>
+              <div className="flex items-center gap-2">
+                <div className="h-1 w-6 bg-blue-500" />
+                <span className="text-sm font-semibold text-blue-500">Giải pháp</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900">
+                Giải pháp nổi bật
+              </h2>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900">
-              Giải pháp nổi bật
-            </h2>
-            <p className="text-neutral-600 max-w-xl">
-              Khám phá các giải pháp công nghệ hàng đầu được thiết kế để tối ưu hóa quy trình kinh doanh của bạn.
-            </p>
+
+            <div className="flex items-center">
+              <button className="inline-flex items-center px-4 py-2 border border-neutral-200 rounded-md text-sm font-medium text-neutral-700 bg-white hover:bg-neutral-100">
+                Xem thêm
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Scroll Track Container */}
-        <motion.div
-          style={{ x: xTranslate }}
-          className="flex gap-6 px-4 md:px-8 w-full max-w-7xl mx-auto"
-        >
-          {SOLUTIONS_DATA.map((solution) => (
-            <SolutionCard key={solution.id} solution={solution} />
-          ))}
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-8 right-8 flex items-center gap-2">
-          <div className="h-1 w-8 bg-blue-500 rounded-full" />
-          <span className="text-xs text-neutral-500 font-medium">Cuộn để xem thêm</span>
+        {/* Scroll Track Container - Overflow hidden for masking */}
+        <div className="relative w-full flex-1 overflow-hidden flex items-stretch pb-16">
+          <motion.div
+            ref={trackRef}
+            style={{ 
+              x: xTranslate,
+              paddingLeft: leftInset,
+              paddingRight: leftInset,
+            }}
+            className="flex gap-6 w-max items-stretch"
+          >
+            {SOLUTIONS_DATA.map((solution) => (
+              <SolutionCard key={solution.id} solution={solution} />
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>

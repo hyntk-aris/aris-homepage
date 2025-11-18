@@ -115,11 +115,11 @@ const CONTAINER_WIDTH = 1440
 const SolutionCard = ({ solution }: { solution: Solution }) => {
   return (
     <motion.div
-      className="flex-shrink-0 min-w-[354px] w-[354px] bg-white rounded-2xl border border-neutral-200 overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col"
+      className="flex-shrink-0 min-w-[354px] w-[354px] bg-white dark:bg-slate-900 rounded-2xl border border-neutral-200 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col"
       whileHover={{ y: -8 }}
     >
       {/* Cover Image - Fixed height 266px */}
-      <div className="relative h-[266px] w-full overflow-hidden bg-neutral-100">
+      <div className="relative h-[266px] w-full overflow-hidden bg-neutral-100 dark:bg-slate-900/50">
         <Image
           src={solution.coverImage}
           alt={solution.title}
@@ -132,7 +132,7 @@ const SolutionCard = ({ solution }: { solution: Solution }) => {
       <div className="flex flex-col p-5 justify-between flex-1">
         {/* Title and Features */}
         <div className="space-y-3">
-          <h3 className="text-lg font-bold text-neutral-900 line-clamp-2">
+          <h3 className="text-lg font-bold text-neutral-900 dark:text-white line-clamp-2">
             {solution.title}
           </h3>
 
@@ -141,7 +141,7 @@ const SolutionCard = ({ solution }: { solution: Solution }) => {
             {solution.features.slice(0, 3).map((feature, idx) => (
               <li key={idx} className="flex items-start gap-2">
                 <span className="text-blue-500 font-bold flex-shrink-0 mt-0.5">•</span>
-                <span className="text-xs text-neutral-600 line-clamp-2">
+                <span className="text-xs text-neutral-600 dark:text-gray-400 line-clamp-2">
                   {feature}
                 </span>
               </li>
@@ -151,7 +151,7 @@ const SolutionCard = ({ solution }: { solution: Solution }) => {
 
         {/* Footer - Category Tag */}
         <div>
-          <span className="inline-block px-3 py-1.5 bg-neutral-100 text-neutral-600 text-xs font-medium rounded-full">
+          <span className="inline-block px-3 py-1.5 bg-neutral-100 dark:bg-slate-800 text-neutral-600 dark:text-gray-400 text-xs font-medium rounded-full">
             {solution.category}
           </span>
         </div>
@@ -212,24 +212,24 @@ export default function FeaturedSolutionsSection() {
   )
 
   return (
-    <section ref={containerRef} className="relative h-[300vh] bg-neutral-50 pb-16">
+    <section ref={containerRef} className="relative h-[300vh] pb-16 bg-background">
       {/* Sticky Container */}
-      <div className="sticky top-0 h-screen bg-neutral-50 flex flex-col items-center overflow-hidden">
+      <div className="sticky top-0 h-screen flex flex-col items-center overflow-hidden bg-background">
         {/* Header - Left aligned heading with action button */}
         <div className="relative w-full z-10 pt-[164px]">
-          <div className="max-w-7xl w-full mx-auto flex items-start justify-between gap-4 md:gap-6 mb-12 px-4 md:px-8">
+          <div className="w-full max-w-[1440px] mx-auto flex items-start justify-between gap-4 md:gap-6 mb-12 px-4 md:px-8">
             <div>
               <div className="flex items-center gap-2">
                 <div className="h-1 w-6 bg-blue-500" />
                 <span className="text-sm font-semibold text-blue-500">Giải pháp</span>
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 dark:text-white">
                 Giải pháp nổi bật
               </h2>
             </div>
 
             <div className="flex items-center">
-              <button className="inline-flex items-center px-4 py-2 border border-neutral-200 rounded-md text-sm font-medium text-neutral-700 bg-white hover:bg-neutral-100">
+              <button className="inline-flex items-center px-4 py-2 border border-neutral-200 dark:border-gray-800 rounded-md text-sm font-medium text-neutral-700 dark:text-gray-400 bg-white dark:bg-slate-900/50 hover:bg-neutral-100 dark:hover:bg-slate-900">
                 Xem thêm
               </button>
             </div>

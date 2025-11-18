@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { NumberTicker } from "@/components/ui/number-ticker"
+import { Button } from "@/components/ui/button"
 
 export default function AboutSection() {
   const stats = [
@@ -13,8 +14,8 @@ export default function AboutSection() {
   ]
 
   return (
-    <section className="py-20">
-      <div className="container mx-auto px-4 max-w-7xl">
+    <section className="py-20 bg-background">
+      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Left Column - Content */}
           <div className="flex flex-col justify-between">
@@ -25,7 +26,7 @@ export default function AboutSection() {
             </div>
 
             {/* Title */}
-            <h2 className="mb-6 text-4xl font-bold lg:text-5xl">
+            <h2 className="mb-6 text-4xl font-bold lg:text-5xl text-slate-900 dark:text-white">
               ARIS Việt Nam
             </h2>
 
@@ -44,10 +45,10 @@ export default function AboutSection() {
 
             {/* CTA Button */}
             <div>
-              <button className="inline-flex items-center gap-2 rounded-full bg-black px-6 py-3 font-semibold text-white transition-all hover:gap-3 dark:bg-white dark:text-black">
+              <Button className="inline-flex items-center gap-2 rounded-full bg-slate-900 dark:bg-white dark:text-slate-900 hover:gap-3">
                 Tải xuống hồ sơ
                 <ChevronRight className="h-4 w-4" />
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -58,18 +59,18 @@ export default function AboutSection() {
                 key={i}
                 className={`flex flex-col items-center justify-center rounded-2xl p-8 transition-all ${
                   stat.highlight
-                    ? "bg-black text-white dark:bg-black"
-                    : "border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950"
+                    ? "bg-slate-900 text-white dark:bg-slate-800"
+                    : "border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-slate-900/50"
                 }`}
               >
-                <div className="mb-2 text-4xl font-bold lg:text-5xl">
+                <div className="mb-2 text-4xl font-bold lg:text-5xl text-slate-900 dark:text-white">
                   <NumberTicker value={stat.number} />
                   <span className="text-2xl">+</span>
                 </div>
                 <p className={`text-center text-sm font-medium ${
                   stat.highlight 
-                    ? "text-neutral-300" 
-                    : "text-neutral-600 dark:text-neutral-400"
+                    ? "text-gray-300" 
+                    : "text-gray-600 dark:text-gray-400"
                 }`}>
                   {stat.label}
                 </p>

@@ -55,14 +55,14 @@ export default function WhyChooseUsSection() {
   const [activeCard, setActiveCard] = useState<string | null>(null)
 
   return (
-    <section className="py-16 bg-white relative">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+    <section className="py-16 relative bg-background">
+      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4">
             Tại sao chọn ARIS?
           </h2>
-          <p className="text-neutral-600 text-lg max-w-2xl">
+          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl">
             Chúng tôi mang đến giải pháp toàn diện với sự cam kết về chất lượng
             và đồng hành lâu dài.
           </p>

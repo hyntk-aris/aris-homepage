@@ -3,15 +3,13 @@ import FeaturedServicesSection from "@/components/sections/home/FeaturedServices
 import AboutSection from "@/components/sections/home/AboutSection"
 import FeaturedSolutionsSection from "@/components/sections/home/FeaturedSolutionsSection"
 import WhyChooseUsSection from "@/components/sections/home/WhyChooseUsSection"
-import FeaturedProjectsSection from "@/components/sections/home/FeaturedProjectsSection"
+import { IndustriesSection } from "@/components/sections/home/IndustriesSection"
+import { CaseStudySection } from "@/components/sections/home/CaseStudySection"
+import { TeamMemberSection } from "@/components/sections/home/TeamMemberSection"
+import { NewsSection } from "@/components/sections/home/NewsSection"
+import { ExploreSection } from "@/components/sections/home/ExploreSection"
+import { ContactSection } from "@/components/sections/home/ContactSection"
 import ProcessSection from "@/components/sections/home/ProcessSection"
-import TestimonialsSection from "@/components/sections/home/TestimonialsSection"
-import TeamSection from "@/components/sections/home/TeamSection"
-import StatsSection from "@/components/sections/home/StatsSection"
-import PartnersSection from "@/components/sections/home/PartnersSection"
-import LatestNewsSection from "@/components/sections/home/LatestNewsSection"
-import FAQSection from "@/components/sections/home/FAQSection"
-import CTASection from "@/components/sections/home/CTASection"
 
 export default function HomePage() {
   return (
@@ -22,14 +20,12 @@ export default function HomePage() {
       <FeaturedSolutionsSection />
       <ProcessSection />
       <WhyChooseUsSection />
-      <FeaturedProjectsSection />
-      <TestimonialsSection />
-      <TeamSection />
-      <StatsSection />
-      <PartnersSection />
-      <LatestNewsSection />
-      <FAQSection />
-      <CTASection />
+      <IndustriesSection />
+      <CaseStudySection />
+      <TeamMemberSection />
+      <NewsSection />
+      <ExploreSection />
+      <ContactSection />
     </main>
   )
 }

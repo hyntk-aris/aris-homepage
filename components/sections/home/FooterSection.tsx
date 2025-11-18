@@ -54,24 +54,24 @@ const offices = [
   },
 ];
 
-export default function Footer() {
+export function FooterSection() {
   const [isMapOpen, setIsMapOpen] = useState(false);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="bg-background">
-      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8">
+    <footer className="bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4">
         {/* Phần 1: Thông tin & Bản đồ (Top) */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 pt-16 pb-8">
           {/* 3 Cột Thông tin Trụ sở */}
           {offices.map((office, index) => (
             <div key={index} className="space-y-3">
-              <h3 className="font-bold text-slate-900 dark:text-white text-sm">{office.name}</h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+              <h3 className="font-bold text-slate-900 text-sm">{office.name}</h3>
+              <p className="text-xs text-gray-600 leading-relaxed">
                 {office.address}
               </p>
-              <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+              <div className="text-xs text-gray-600 space-y-1">
                 <p>
                   <span className="font-semibold">Email:</span> {office.email}
                 </p>
@@ -88,7 +88,7 @@ export default function Footer() {
           {/* Cột 4: Map Widget */}
           <div className="lg:col-span-1">
             {/* Render Map Thumbnail: div relative aspect-video rounded-lg overflow-hidden. // Inside: <iframe ... src="google_map_embed_url" allowFullScreen ... /> // Expand Button: absolute bottom-2 right-2 bg-white p-2 rounded shadow hover:bg-gray-100 cursor-pointer. Icon: Maximize2. */}
-            <div className="relative w-full h-64 rounded-lg overflow-hidden bg-gray-200 dark:bg-slate-900">
+            <div className="relative w-full h-64 rounded-lg overflow-hidden bg-gray-200">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.517758103474!2d106.68163!3d10.758765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ee66e6c3607%3A0x80c1f21b3d7d8b0c!2sAris%20Vietnam!5e0!3m2!1sen!2s!4v1700000000000"
                 width="100%"
@@ -103,26 +103,26 @@ export default function Footer() {
               {/* Expand Button */}
               <button
                 onClick={() => setIsMapOpen(true)}
-                className="absolute bottom-2 right-2 bg-white dark:bg-slate-900 p-2 rounded shadow hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer z-10"
+                className="absolute bottom-2 right-2 bg-white p-2 rounded shadow hover:bg-gray-100 transition-colors cursor-pointer z-10"
                 aria-label="Expand map"
               >
-                <Maximize2 size={18} className="text-slate-900 dark:text-white" />
+                <Maximize2 size={18} className="text-slate-900" />
               </button>
             </div>
           </div>
         </div>
 
         {/* Phần 2: Danh sách liên kết (Middle) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-t border-gray-200 dark:border-gray-800">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-t border-gray-200">
           {/* Dịch vụ */}
           <div>
-            <h3 className="font-bold text-slate-900 dark:text-white mb-4">Dịch vụ</h3>
+            <h3 className="font-bold text-slate-900 mb-4">Dịch vụ</h3>
             <ul className="space-y-2">
               {services.map((service, index) => (
                 <li key={index}>
                   <a
                     href={service.href}
-                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                    className="text-sm text-gray-600 hover:text-slate-900 transition-colors"
                   >
                     {service.label}
                   </a>
@@ -133,13 +133,13 @@ export default function Footer() {
 
           {/* Ngành trọng điểm */}
           <div>
-            <h3 className="font-bold text-slate-900 dark:text-white mb-4">Ngành trọng điểm</h3>
+            <h3 className="font-bold text-slate-900 mb-4">Ngành trọng điểm</h3>
             <ul className="space-y-2">
               {industries.map((industry, index) => (
                 <li key={index}>
                   <a
                     href={industry.href}
-                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                    className="text-sm text-gray-600 hover:text-slate-900 transition-colors"
                   >
                     {industry.label}
                   </a>
@@ -150,7 +150,7 @@ export default function Footer() {
         </div>
 
         {/* Phần 3: Copyright & Back to Top (Bottom) */}
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 pb-8 border-t border-gray-200 dark:border-gray-800">
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 pb-8 border-t border-gray-200">
           <div className="flex items-center gap-2 mb-4 md:mb-0">
             <svg
               className="w-6 h-6"
@@ -162,7 +162,7 @@ export default function Footer() {
                 ARIS
               </text>
             </svg>
-            <span className="text-xs text-gray-600 dark:text-gray-400">
+            <span className="text-xs text-gray-600">
               Copyright © 2025 ARIS Vietnam | All rights reserved.
             </span>
           </div>
@@ -170,7 +170,7 @@ export default function Footer() {
           {/* Scroll To Top Function: const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' }) // Button: button onClick={scrollToTop} className="bg-black p-3 rounded hover:opacity-80 text-white" */}
           <button
             onClick={scrollToTop}
-            className="bg-slate-900 dark:bg-white p-3 rounded hover:bg-slate-800 dark:hover:bg-gray-200 transition-colors text-white dark:text-slate-900 flex-shrink-0"
+            className="bg-slate-900 p-3 rounded hover:bg-slate-800 transition-colors text-white flex-shrink-0"
             aria-label="Back to top"
           >
             <ArrowUp size={20} />
@@ -192,7 +192,7 @@ export default function Footer() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white dark:bg-slate-900 rounded-lg w-full h-[90vh] max-w-5xl overflow-hidden relative"
+              className="bg-white rounded-lg w-full h-[90vh] max-w-5xl overflow-hidden relative"
               onClick={(e) => e.stopPropagation()}
             >
               <iframe
@@ -208,11 +208,11 @@ export default function Footer() {
               {/* Close Button */}
               <button
                 onClick={() => setIsMapOpen(false)}
-                className="absolute top-4 right-4 bg-white dark:bg-slate-900 p-2 rounded shadow hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors z-10"
+                className="absolute top-4 right-4 bg-white p-2 rounded shadow hover:bg-gray-100 transition-colors z-10"
                 aria-label="Close map"
               >
                 <svg
-                  className="w-6 h-6 text-slate-900 dark:text-white"
+                  className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

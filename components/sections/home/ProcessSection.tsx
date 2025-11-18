@@ -48,16 +48,16 @@ export default function ProcessSection() {
   const activeStepData = PROCESS_STEPS.find((step) => step.id === activeStep)
 
   return (
-    <section className="py-[164px] bg-neutral-50">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+    <section className="py-[164px] bg-background">
+      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="mb-12">
           <div className="flex items-center gap-2 mb-3">
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white">
             Quy trình dự án
           </h2>
-          <p className="text-neutral-600 mt-4 max-w-2xl">
+          <p className="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl">
             Chúng tôi đồng hành cùng bạn trong từng giai đoạn - từ ý tưởng ban đầu cho đến khi sản phẩm chính thức ra mắt. Mỗi bước đều được xây dựng kỳ lưỡng để đảm bảo hiệu quả và chất lượng.
           </p>
         </div>
@@ -72,14 +72,14 @@ export default function ProcessSection() {
                 onClick={() => setActiveStep(step.id)}
                 className={`text-left p-4 rounded-lg border-2 transition-all duration-200 ${
                   activeStep === step.id
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-neutral-200 bg-white hover:border-neutral-300"
+                    ? "border-blue-500 bg-blue-50 dark:bg-slate-900 dark:border-blue-500"
+                    : "border-gray-200 bg-white dark:border-gray-800 dark:bg-slate-900/50 hover:border-gray-300 dark:hover:border-gray-700"
                 }`}
               >
-                <div className="text-sm font-medium text-neutral-500">
+                <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
                   Step {index + 1}
                 </div>
-                <div className="text-lg font-bold text-neutral-900 mt-1">
+                <div className="text-lg font-bold text-slate-900 dark:text-white mt-1">
                   {step.title}
                 </div>
               </button>

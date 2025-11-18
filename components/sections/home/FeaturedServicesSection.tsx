@@ -34,13 +34,13 @@ export default function FeaturedServicesSection() {
   ]
 
   return (
-    <section className="py-20">
-      <div className="container mx-auto px-4 max-w-7xl">
+    <section className="py-20 bg-background">
+      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8">
         {/* Header Section */}
         <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           {/* Left - Main Title */}
           <div className="flex-1">
-            <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
+            <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl text-slate-900 dark:text-white">
               Tăng tốc hành trình DX của bạn nhờ dịch vụ từ chúng tôi
             </h1>
           </div>

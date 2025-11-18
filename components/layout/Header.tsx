@@ -41,7 +41,7 @@ export default function Header() {
 
   return (
     <>
-      <header className={`w-full transition-all duration-300 ${scrolled ? "fixed top-0 left-0 right-0 z-50" : "relative bg-transparent"}`}>
+      <header className={`w-full transition-all duration-200 ${scrolled ? "fixed top-0 left-0 right-0 z-50" : "relative"}`}>
         <Navbar>
           <NavBody>
             <div className="flex items-center">
@@ -55,7 +55,11 @@ export default function Header() {
 
             <div className="flex items-center gap-3">
               <DarkModeToggle />
-              <NavbarButton href="/contact">Contact Us</NavbarButton>
+              <Link href="/contact">
+                <button className="bg-slate-900 text-white rounded-full px-6 py-2 hover:opacity-90 transition-opacity font-semibold dark:bg-slate-100 dark:text-slate-900 text-sm">
+                  Contact Us
+                </button>
+              </Link>
             </div>
           </NavBody>
 

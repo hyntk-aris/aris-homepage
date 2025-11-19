@@ -229,15 +229,24 @@ export const NavbarLogo = () => {
   return (
     <a
       href="#"
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
+      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal"
     >
+      {/* Light mode logo */}
       <img
-        src="https://assets.aceternity.com/logo-dark.png"
-        alt="logo"
-        width={30}
-        height={30}
+        src="/images/companylogo.svg"
+        alt="Company logo"
+        width={110}
+        height={110}
+        className="dark:hidden block"
       />
-      <span className="font-medium text-black dark:text-white">Startup</span>
+      {/* Dark mode logo (white version) */}
+      <img
+        src="/images/companylogo.svg"
+        alt="Company logo"
+        width={110}
+        height={110}
+        className="hidden dark:block dark:brightness-0 dark:invert"
+      />
     </a>
   );
 };

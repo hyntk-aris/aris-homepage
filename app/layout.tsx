@@ -1,11 +1,10 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+// Removed Inter font to allow global Plus Jakarta Sans from globals.css
 import { ThemeProvider } from "next-themes"
 import "./globals.css"
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
 
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "MyCompany - Trang chủ",
@@ -19,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className="font-sans">
         <ThemeProvider 
           attribute="class" 
           defaultTheme="system" 

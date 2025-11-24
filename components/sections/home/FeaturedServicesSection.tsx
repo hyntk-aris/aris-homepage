@@ -1,43 +1,71 @@
 "use client"
 
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid"
-import { Code, Zap, Layout, BarChart3, Smartphone } from "lucide-react"
 
 export default function FeaturedServicesSection() {
   const services = [
     {
-      title: "Web Development",
-      description: "Build fast and modern websites with cutting-edge technologies. We create responsive, scalable solutions tailored to your business needs.",
-      icon: <Code className="h-8 w-8 text-blue-500" />,
-      className: "md:col-span-1 md:row-span-2 min-h-[384px]",
+      title: (
+        <>
+          Phát triển phần mềm
+          <br />
+          dịch vụ trọn gói ONE-STOP
+        </>
+      ),
+      // Big card: spans 2/4 columns (50%) and 2 rows to match height of right column stack
+      className: "md:col-span-2 md:row-span-2 min-h-[384px] ",
+      // example image path (place your image at public/images/services/hero-one.webp)
+      image: "/images/services/hero-one.webp",
+      header: <div className="flex-1" />,
+
     },
     {
-      title: "Performance",
-      description: "Optimized for speed and efficiency",
-      icon: <Zap className="h-6 w-6 text-yellow-500" />,
+      title: "AI/AL/AUTOMATION",
+      // Small card: occupies 1/4 width on md+
+      className: "md:col-span-1 items-center text-center",
+      image: "/images/services/ai-automation.webp",
+      header: <div className="flex-1" />,
     },
     {
-      title: "Responsive Design",
-      description: "Works perfectly on all devices",
-      icon: <Layout className="h-6 w-6 text-green-500" />,
+      title: (
+        <>
+          Tư vấn chuyển đổi số,
+          <br />
+          giải pháp chuyển đổi số
+        </>
+      ),
+      className: "md:col-span-1",
+      image: "/images/services/dx-consulting.webp",
     },
     {
-      title: "Analytics",
-      description: "Track and analyze user behavior",
-      icon: <BarChart3 className="h-6 w-6 text-purple-500" />,
+      title: (
+        <>
+          Phát triển
+          <br />
+          ứng dụng di động
+        </>
+      ),
+      className: "md:col-span-1",
+      image: "/images/services/mobile-apps.webp",
     },
     {
-      title: "Mobile Apps",
-      description: "Native mobile application development",
-      icon: <Smartphone className="h-6 w-6 text-pink-500" />,
+      title: (
+        <>
+          Thiết kế UI/UX
+          <br />
+          Thiết kế đồ họa
+        </>
+      ),
+      className: "md:col-span-1",
+      image: "/images/services/ui-ux.webp",
     },
   ]
 
   return (
     <section className="py-20 bg-background">
-      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8">
+      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8 ">
         {/* Header Section */}
-        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div className="mb-12 flex gap-6">
           {/* Left - Main Title */}
           <div className="flex-1">
             <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl text-slate-900 dark:text-white">
@@ -46,22 +74,24 @@ export default function FeaturedServicesSection() {
           </div>
 
           {/* Right - Subtitle */}
-          <div className="flex-1 md:pl-8">
+          <div className="flex-1 md:pl-8 flex items-end">
             <p className="text-base text-muted-foreground md:text-lg">
               ARIS Việt nam đồng hành cùng bạn trên hành trình chuyển đổi số.
             </p>
           </div>
         </div>
 
-        {/* BentoGrid Section */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {/* BentoGrid Section: 4-column system on md+ (split into 4 equal parts) */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
           {services.map((service, i) => (
             <BentoGridItem
               key={i}
               title={service.title}
-              description={service.description}
-              icon={service.icon}
+              /* remove description: only title should display */
               className={service.className}
+              /* for the first (big) card, inject a header spacer so content sits at bottom */
+              header={service.header}
+              image={service.image}
             />
           ))}
         </div>

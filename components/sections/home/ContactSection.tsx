@@ -1,32 +1,48 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowRight, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { contactFormSchema, type ContactFormData } from "@/lib/schemas";
+import { sendContactEmail } from "@/actions/send-email";
 
 export function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    mode: "onChange",
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const onSubmit = async (data: ContactFormData) => {
+    try {
+      setIsSubmitting(true);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Handle form submission here
+      // Call server action
+      const result = await sendContactEmail(data);
+
+      if (result.success) {
+        toast.success(
+          result.message || "Đã gửi thông tin! Chúng tôi sẽ liên hệ sớm."
+        );
+        reset(); // Reset form sau khi gửi thành công
+      } else {
+        toast.error(result.error || "Lỗi khi gửi email. Vui lòng thử lại.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Lỗi không xác định. Vui lòng thử lại sau.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -51,7 +67,7 @@ export function ContactSection() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Row 1: Tên & Email */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -61,12 +77,17 @@ export function ContactSection() {
                 <input
                   type="text"
                   id="name"
-                  name="name"
                   placeholder="Brian Clark"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white focus:ring-offset-0 transition-all"
+                  {...register("name")}
+                  className={`w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                    errors.name
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-200 dark:border-gray-800 focus:ring-slate-900 dark:focus:ring-white"
+                  }`}
                 />
+                {errors.name && (
+                  <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-slate-900 dark:text-white mb-2">
@@ -75,45 +96,39 @@ export function ContactSection() {
                 <input
                   type="email"
                   id="email"
-                  name="email"
                   placeholder="example@youremail.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white focus:ring-offset-0 transition-all"
+                  {...register("email")}
+                  className={`w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                    errors.email
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-200 dark:border-gray-800 focus:ring-slate-900 dark:focus:ring-white"
+                  }`}
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                )}
               </div>
             </div>
 
-            {/* Row 2: Điện thoại & Tiêu đề */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-slate-900 dark:text-white mb-2">
-                  Điện thoại
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  placeholder="097 1548 125"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white focus:ring-offset-0 transition-all"
-                />
-              </div>
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-slate-900 dark:text-white mb-2">
-                  Tiêu đề
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  placeholder="BRIX Agency"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white focus:ring-offset-0 transition-all"
-                />
-              </div>
+            {/* Row 2: Điện thoại */}
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-slate-900 dark:text-white mb-2">
+                Điện thoại (tùy chọn)
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                placeholder="097 1548 125"
+                {...register("phone")}
+                className={`w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                  errors.phone
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-200 dark:border-gray-800 focus:ring-slate-900 dark:focus:ring-white"
+                }`}
+              />
+              {errors.phone && (
+                <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>
+              )}
             </div>
 
             {/* Row 3: Lời nhắn */}
@@ -123,39 +138,38 @@ export function ContactSection() {
               </label>
               <textarea
                 id="message"
-                name="message"
                 placeholder="Type your message here..."
                 rows={4}
-                value={formData.message}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white focus:ring-offset-0 transition-all resize-none"
+                {...register("message")}
+                className={`w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all resize-none bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                  errors.message
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-200 dark:border-gray-800 focus:ring-slate-900 dark:focus:ring-white"
+                }`}
               ></textarea>
-            </div>
-
-            {/* Recaptcha Mock */}
-            <div className="border border-gray-200 dark:border-gray-800 rounded-md p-4 flex items-center gap-3 bg-gray-50 dark:bg-slate-900/50">
-              <input
-                type="checkbox"
-                id="recaptcha"
-                className="w-6 h-6 cursor-pointer"
-              />
-              <span className="text-sm text-gray-700 dark:text-gray-400">I'm not a robot</span>
-              <div className="ml-auto text-right text-xs">
-                <div className="font-semibold text-gray-700 dark:text-gray-300">reCAPTCHA</div>
-                <div className="text-gray-600 dark:text-gray-500">
-                  Privacy - Terms
-                </div>
-              </div>
+              {errors.message && (
+                <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>
+              )}
             </div>
 
             {/* Submit Button */}
             <div>
               <Button
                 type="submit"
-                className="w-fit bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-gray-200 text-white dark:text-slate-900 px-6 py-3 rounded-md flex items-center gap-2 transition-colors"
+                disabled={isSubmitting || !isValid}
+                className="w-fit bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-gray-200 text-white dark:text-slate-900 px-6 py-3 rounded-md flex items-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Gửi yêu cầu
-                <ArrowRight size={18} />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    Đang gửi...
+                  </>
+                ) : (
+                  <>
+                    Gửi yêu cầu
+                    <ArrowRight size={18} />
+                  </>
+                )}
               </Button>
             </div>
           </form>

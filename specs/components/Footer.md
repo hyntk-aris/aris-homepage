@@ -1,0 +1,1 @@
+<!-- Reference: components/layout/Footer.tsx -->

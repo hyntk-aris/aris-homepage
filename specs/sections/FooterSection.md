@@ -1,0 +1,1 @@
+<!-- Reference: components/sections/home/FooterSection.tsx -->

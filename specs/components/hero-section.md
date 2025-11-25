@@ -1,0 +1,1 @@
+<!-- Reference: components/ui/hero-section.tsx -->

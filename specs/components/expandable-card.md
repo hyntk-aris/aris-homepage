@@ -1,0 +1,1 @@
+<!-- Reference: components/ui/expandable-card.tsx -->

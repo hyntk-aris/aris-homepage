@@ -44,10 +44,10 @@ export async function sendContactEmail(formData: ContactFormData) {
       </div>
     `
 
-    // Gửi email tới admin
+    // Gửi email tới testing email của Resend
     const response = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "noreply@aris-vn.com", // Email sender từ verified domain
-      to: process.env.CONTACT_EMAIL_TO || "hy.ntk@aris-vn.com", // Email người nhận (admin)
+      from: "onboarding@resend.dev", // Email testing của Resend (không cần verify domain)
+      to: "delivery@resend.dev", // Email testing để xem kết quả gửi
       subject: `Yêu cầu liên hệ từ ${validatedData.name}`,
       html: emailContent,
       replyTo: validatedData.email, // Cho phép reply trực tiếp tới khách hàng

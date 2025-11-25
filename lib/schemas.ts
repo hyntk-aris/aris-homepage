@@ -11,8 +11,8 @@ export const contactFormSchema = z.object({
     }),
   email: z
     .string()
-    .email({
-      message: "Vui lòng nhập email hợp lệ",
+    .min(1, {
+      message: "Email là bắt buộc",
     })
     .max(255, {
       message: "Email không được vượt quá 255 ký tự",
